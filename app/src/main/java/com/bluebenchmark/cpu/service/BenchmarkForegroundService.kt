@@ -37,16 +37,22 @@ class BenchmarkForegroundService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent?.action == ACTION_STOP) {
+            stopAndRemove(startId)
+            return START_NOT_STICKY
+        }
         try {
             val text = intent?.getStringExtra(EXTRA_TEXT) ?: "CPU benchmark running"
             if (!foregroundStarted) {
-                startForegroundCompat(1, buildNotification(text))
+                startForegroundCompat(NOTIFICATION_ID, buildNotification(text))
                 foregroundStarted = true
             } else {
                 updateNotification(text)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Could not start benchmark foreground service", e)
+            removeForegroundNotification()
+            releaseWakeLock()
             stopSelfResult(startId)
         }
         return START_NOT_STICKY
@@ -114,18 +120,43 @@ class BenchmarkForegroundService : Service() {
         }
     }
 
-    override fun onDestroy() {
+    private fun stopAndRemove(startId: Int) {
+        removeForegroundNotification()
+        releaseWakeLock()
+        stopSelfResult(startId)
+    }
+
+    private fun removeForegroundNotification() {
+        try {
+            stopForeground(STOP_FOREGROUND_REMOVE)
+        } catch (_: Exception) {
+        }
+        try {
+            (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(NOTIFICATION_ID)
+        } catch (_: Exception) {
+        }
+        foregroundStarted = false
+    }
+
+    private fun releaseWakeLock() {
         try {
             wakeLock?.let { if (it.isHeld) it.release() }
         } catch (_: Exception) {
         }
         wakeLock = null
+    }
+
+    override fun onDestroy() {
+        removeForegroundNotification()
+        releaseWakeLock()
         super.onDestroy()
     }
 
     companion object {
         private const val TAG = "BlueBenchmarkService"
+        const val NOTIFICATION_ID = 1
         const val CHANNEL = "bluebench"
         const val EXTRA_TEXT = "text"
+        const val ACTION_STOP = "com.bluebenchmark.cpu.action.STOP_BENCHMARK_SERVICE"
     }
 }

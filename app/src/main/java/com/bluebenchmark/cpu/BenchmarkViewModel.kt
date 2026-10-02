@@ -136,7 +136,6 @@ class BenchmarkViewModel(app: Application) : AndroidViewModel(app) {
                     )
                 }
                 _runState.value = RunState.COMPLETE
-                updateService("CPU suite complete · score ${completed.score}")
             } catch (_: CancellationException) {
                 _runState.value = RunState.CANCELED
             } catch (e: InterruptedException) {
@@ -206,6 +205,18 @@ class BenchmarkViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun stopService() {
-        try { getApplication<Application>().stopService(Intent(getApplication(), BenchmarkForegroundService::class.java)) } catch (_: Exception) { }
+        val context = getApplication<Application>()
+        val intent = Intent(context, BenchmarkForegroundService::class.java)
+            .setAction(BenchmarkForegroundService.ACTION_STOP)
+        try {
+            context.startService(intent)
+        } catch (_: Exception) {
+            try { context.stopService(intent) } catch (_: Exception) { }
+        }
+        try {
+            (context.getSystemService(android.content.Context.NOTIFICATION_SERVICE) as android.app.NotificationManager)
+                .cancel(BenchmarkForegroundService.NOTIFICATION_ID)
+        } catch (_: Exception) {
+        }
     }
 }
