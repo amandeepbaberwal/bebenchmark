@@ -208,7 +208,7 @@ private fun AppHeader(title: String, subtitle: String, action: HeaderAction, isH
                     Text("Benchmark", color = MaterialTheme.colorScheme.onBackground, fontFamily = pixel, fontSize = 10.sp, lineHeight = 13.sp, maxLines = 1)
                     Spacer(Modifier.weight(1f))
                     Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        Text("v1.0.0", color = AppMuted, fontFamily = mono, fontSize = 7.sp, lineHeight = 9.sp)
+                        Text("v1.0.1", color = AppMuted, fontFamily = mono, fontSize = 7.sp, lineHeight = 9.sp)
                         Box(
                             Modifier.size(28.dp).border(1.dp, AppBorder)
                                 .clickable(role = Role.Button, onClick = onAction)

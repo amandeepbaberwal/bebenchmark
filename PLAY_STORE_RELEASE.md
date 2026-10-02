@@ -4,7 +4,7 @@
 
 - App name: BE Benchmark
 - Package: `com.lapetlo.bebenchmark` (do not change after the first Play submission).
-- Version: `1.0.0`, version code `1`.
+- Current upload: version `1.0.1`, version code `2` (the initial `1.0.0` / code `1` bundle is already in internal testing).
 - Developer name: Amandeep.
 - Support email: `help@lapetlo.com`.
 - Minimum Android version: Android 7.0 (API 24).
@@ -39,6 +39,14 @@ Before submission:
 5. Upload to an internal testing track and verify the signed release on Android 9 and a current Android release.
 
 ## Listing copy draft
+
+**Release notes for version 1.0.1:**
+
+```text
+<en-US>
+Improved portrait orientation behavior and benchmark notification cleanup. The progress notification now clears when a run ends or is stopped.
+</en-US>
+```
 
 **Title:** BE Benchmark
 
