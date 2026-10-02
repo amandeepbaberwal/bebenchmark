@@ -26,7 +26,7 @@ The bundle is written to `app/build/outputs/bundle/release/app-release.aab`.
 
 ## Privacy policy and Play Console
 
-The full policy is in `docs/privacy-policy.html` and is available in the app under Settings > Privacy Policy. GitHub Pages can host this static page from the repository's `/docs` folder. This checkout currently has no GitHub remote, so the page is not public yet; after pushing to GitHub and enabling Pages for `/docs`, add the resulting URL to Play Console.
+The full policy is in `docs/privacy-policy.html` and is available in the app under Settings > Privacy Policy. The repository is on GitHub; enable Pages from branch `main` and folder `/docs` in the repository's Settings > Pages. The policy URL will be `https://amandeepbaberwal.github.io/bebenchmark/privacy-policy.html`. Confirm that it loads before adding it to Play Console.
 
 The app stores benchmark history and preferences on device, does not request the Internet permission, and does not send results to a BE Benchmark server. Android system backup may include app data according to the user's device settings. JSON export is user initiated through Android's document picker; the destination may be a cloud provider selected by the user.
 
@@ -54,7 +54,7 @@ The benchmark runs locally and does not send results to a BE Benchmark server. A
 
 ## Remaining submission work
 
-- Push this repository and enable GitHub Pages for the `/docs` directory; enter the public privacy policy URL in Play Console.
+- Enable GitHub Pages from `main` / `/docs` and enter the public privacy policy URL in Play Console.
 - Capture a completed-run screenshot on the supported devices; the current BE package starts with empty history.
 - Complete Play Console declarations and record the foreground service demo video.
 - Inspect the signed AAB, then complete internal track testing before production review.
